@@ -1,0 +1,62 @@
+<div>
+    <div>
+        <h3>Поиск продукта по названию</h3>
+        <form novalidate ng-submit="fillTable()">
+            <div class="form-group col-md-6">
+                <input class="form-control" type="text" ng-model="filter.name" placeholder="Ведите название">
+            </div>
+            <div>
+                <button class="btn btn-success" type="submit">Применить фильтр</button>
+                <button class="btn btn-success" ng-click="clearFilter()">Очистить фильтр</button>
+            </div>
+        </form>
+        <br>
+        <h3>Продукты</h3>
+        <table class="table table-hover" cellpadding="0" cellspacing="0">
+            <tr>
+                <td>ID</td>
+                <td>Название</td>
+                <td>Описание</td>
+                <td>Действие</td>
+            </tr>
+            <tbody>
+
+            <tr ng-repeat="p in ProductsPage.content">
+                <td>{{p.id}}</td>
+                <td>{{p.name}}</td>
+                <td>
+                    <input class="form-control" type="text" ng-model="p.description" placeholder="Изменить описание">
+                </td>
+                <td>
+                    <button class="btn btn-success" ng-click="submitUpdateProduct(p.id, p.description)">Сохранить</button>
+                    <button class="btn btn-danger" ng-click="delete(p.id)">Удалить</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-success" ng-click="fillTable()">Обновить</button>
+        <br>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item" ng-repeat="pageIndex in PaginationArray">
+                    <a class="page-link" ng-click="fillTable(pageIndex)">{{pageIndex}}</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <hr>
+    <div>
+        <h3>Создать новый продукт</h3>
+        <form ng-submit="submitCreateNewProduct()">
+            <div class="form-group col-md-6">
+                <input class="form-control" type="text" ng-model="newProduct.name" placeholder="Название продукта" required>
+            </div>
+            <div class="form-group col-md-6">
+                <input class="form-control" type="text" ng-model="newProduct.description" placeholder="Описание продукта">
+            </div>
+            <div class="form-group col-md-6">
+                <button class="btn btn-success" type="submit">Сохранить новый продукт</button>
+            </div>
+        </form>
+    </div>
+</div>
