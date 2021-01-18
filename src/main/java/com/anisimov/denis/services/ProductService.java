@@ -23,16 +23,16 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Page<Product> findAllProducts(String name, int page, int size) {
+    public ResponseEntity<?> findAllProducts(String name, int page, int size) {
         Specification<Product> spec = Specification.where(null);
         if (name != null && !name.isBlank()) {
             spec = spec.and(ProductSpecifications.nameLike(name));
         }
-        return productRepository.findAll(spec, PageRequest.of(page, size));
+        return new ResponseEntity<>(productRepository.findAll(spec, PageRequest.of(page, size)), HttpStatus.OK);
     }
 
     public ResponseEntity<?> saveProduct(Product product) {
-        return ResponseEntity.ok(productRepository.save(product));
+        return new ResponseEntity<>(productRepository.save(product).getId(), HttpStatus.CREATED);
     }
 
     public ResponseEntity<?> deleteProductById(Long id) {

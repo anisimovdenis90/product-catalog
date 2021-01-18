@@ -17,7 +17,7 @@ public class Product {
     private Long id;
 
     @Column(name = "name")
-    @ApiModelProperty(notes = "Название продукта.", example = "Молоко", required = true, position = 1)
+    @ApiModelProperty(notes = "Название продукта.", example = "Milk", required = true, position = 1)
     @Size(min = 3, message = "Имя товара должно содержать минимум 3 символа")
     private String name;
 

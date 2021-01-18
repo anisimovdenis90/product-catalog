@@ -5,7 +5,6 @@ import com.anisimov.denis.exceptions.InputDataError;
 import com.anisimov.denis.services.ProductService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -39,7 +38,7 @@ public class ProductController {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 500, message = "Внутренняя ошибка")
     })
-    public Page<Product> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,
+    public ResponseEntity<?> getAllProducts(@RequestParam(defaultValue = "1", name = "p") Integer page,
                                         @RequestParam(name = "name", required = false) String name
     ) {
         if (page < 1) {
@@ -75,7 +74,7 @@ public class ProductController {
             @ApiImplicitParam(value = "Продукт, который должен быть сохранен", name = "product", dataTypeClass = Product.class, required = true)
     })
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 201, message = "Продукт успешно создан"),
             @ApiResponse(code = 400, message = "Неверное имя продукта (минимум 3 символа)"),
             @ApiResponse(code = 500, message = "Внутренняя ошибка")
     })
@@ -93,7 +92,7 @@ public class ProductController {
             httpMethod = "PUT"
     )
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(value = "Продукт, содержащий id и новое описание", name = "product_id", dataTypeClass = Long.class, required = true),
+            @ApiImplicitParam(value = "Id продукта, описание которого требуется изменить", name = "product_id", dataTypeClass = Long.class, required = true),
             @ApiImplicitParam(value = "Новое описание продукта", name = "description", dataTypeClass = String.class, required = true)
     })
     @ApiResponses(value = {
